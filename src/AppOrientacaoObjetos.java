@@ -1,6 +1,6 @@
-import orientacao_objetos.Carro;
-import orientacao_objetos.Funcionario;
-import orientacao_objetos.Produto;
+import orientacaoAObjetos.Carro;
+import orientacaoAObjetos.Funcionario;
+import orientacaoAObjetos.Produto;
 
 public class AppOrientacaoObjetos {
     private static String retornaAlgo() {
