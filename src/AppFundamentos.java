@@ -1,7 +1,4 @@
-import fundamentos.CalcularAreaRetangulo;
-import fundamentos.ControleEstoquePadaria;
-import fundamentos.InferenciaDeTipo;
-import fundamentos.PromocaoAutomatica;
+import fundamentos.*;
 
 public class AppFundamentos {
     public static void main(String[] args) {
