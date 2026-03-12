@@ -1,7 +1,5 @@
 package polimorfismo.ex1;
 
-import java.util.List;
-
 public class GerenciadorVeiculo {
     public static void main(String[] args) {
         Veiculo[] veiculos = new Veiculo[2];

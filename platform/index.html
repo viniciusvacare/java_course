@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Java Studies</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0d0f14;
+  --surface: #13161d;
+  --surface2: #1a1e28;
+  --border: #252a38;
+  --accent: #f0c040;
+  --accent2: #4af0a0;
+  --text: #e8eaf0;
+  --muted: #5a6275;
+  --sidebar-w: 290px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────────────────── */
+#sidebar {
+  width: var(--sidebar-w);
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.sidebar-header {
+  padding: 26px 22px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.logo-eyebrow {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.logo-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--accent);
+  line-height: 1;
+}
+.logo-title span { color: var(--text); }
+
+.sidebar-stats {
+  display: flex;
+  gap: 10px;
+  padding: 14px 22px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.stat {
+  flex: 1;
+  background: var(--surface2);
+  border-radius: 8px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 9px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-top: 3px;
+}
+
+.sidebar-search {
+  padding: 12px 22px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.search-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px 8px 32px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  outline: none;
+  transition: border-color 0.15s;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%235a6275' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--muted); }
+
+#pkg-list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 12px 14px;
+}
+
+.pkg-group { margin-bottom: 4px; }
+
+.pkg-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  user-select: none;
+  transition: all 0.15s;
+  font-family: 'JetBrains Mono', monospace;
+}
+.pkg-header:hover { background: var(--surface2); color: var(--text); }
+.pkg-header.open { color: var(--text); }
+
+.pkg-chevron {
+  margin-left: auto;
+  font-size: 10px;
+  transition: transform 0.2s;
+  opacity: 0.4;
+}
+.pkg-header.open .pkg-chevron { transform: rotate(90deg); opacity: 1; }
+
+.pkg-count {
+  font-size: 10px;
+  background: var(--border);
+  border-radius: 10px;
+  padding: 1px 7px;
+  color: var(--muted);
+}
+
+.pkg-items { display: none; padding: 2px 0 4px 12px; }
+.pkg-items.open { display: block; }
+
+.class-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted);
+  transition: all 0.15s;
+  margin-bottom: 1px;
+  border-left: 2px solid transparent;
+}
+.class-item:hover { background: var(--surface2); color: var(--text); }
+.class-item.active {
+  color: var(--accent2);
+  border-left-color: var(--accent2);
+  background: rgba(74, 240, 160, 0.06);
+}
+
+.class-icon { font-size: 11px; flex-shrink: 0; opacity: 0.6; }
+.class-item.active .class-icon { opacity: 1; }
+
+/* ── MAIN ────────────────────────────────────────────────────────── */
+#main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 0;
+}
+
+#topbar {
+  height: 54px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.breadcrumb-sep { opacity: 0.3; }
+.breadcrumb-active { color: var(--accent2); }
+
+.topbar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.refresh-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.refresh-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+.refresh-btn.spinning .refresh-icon { animation: spin 0.6s linear; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.refresh-icon { display: inline-block; }
+
+.last-updated {
+  font-size: 10px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+#content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 32px;
+}
+
+/* ── WELCOME ─────────────────────────────────────────────────────── */
+#welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 14px;
+  text-align: center;
+}
+
+.welcome-glyph {
+  font-size: 64px;
+  line-height: 1;
+  filter: grayscale(0.4);
+  opacity: 0.5;
+}
+
+.welcome-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.welcome-hint {
+  font-size: 13px;
+  color: var(--border);
+  max-width: 340px;
+  line-height: 1.7;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.welcome-cmd {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--accent2);
+  margin-top: 8px;
+}
+
+/* ── EXERCISE VIEW ───────────────────────────────────────────────── */
+#exercise-view { display: none; }
+#exercise-view.visible {
+  display: block;
+  animation: fadeUp 0.2s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.ex-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.badge {
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+
+.ex-title {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 6px;
+}
+
+.ex-classname {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--accent);
+  margin-bottom: 24px;
+}
+
+/* ── TABS ────────────────────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 22px;
+  gap: 2px;
+}
+
+.tab-btn {
+  padding: 9px 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.15s;
+  background: none;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+.tab-panel { display: none; }
+.tab-panel.active { display: block; animation: fadeUp 0.15s ease; }
+
+/* ── DESC ────────────────────────────────────────────────────────── */
+.desc-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px 28px;
+  line-height: 1.85;
+  font-size: 14px;
+  color: #b8bfcc;
+}
+
+.desc-card-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 12px;
+}
+
+.empty-desc {
+  font-style: italic;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+
+.tags-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+
+.tag {
+  background: rgba(240,192,64,0.08);
+  border: 1px solid rgba(240,192,64,0.2);
+  color: var(--accent);
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+
+/* ── CODE ────────────────────────────────────────────────────────── */
+.code-wrap {
+  background: #181920;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.code-bar {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 9px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mac-dots { display: flex; gap: 5px; }
+.mac-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+.code-file {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: 4px;
+}
+
+.copy-btn {
+  margin-left: auto;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 3px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+pre[class*="language-"] {
+  margin: 0 !important;
+  border-radius: 0 !important;
+  font-size: 13px !important;
+  line-height: 1.75 !important;
+  max-height: 500px;
+  background: #181920 !important;
+  tab-size: 4;
+}
+
+/* ── OUTPUT ──────────────────────────────────────────────────────── */
+.output-wrap {
+  background: #0a0c10;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.output-bar {
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  padding: 9px 16px;
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent2);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.output-pulse {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent2);
+  animation: pulse 2.5s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.3; transform: scale(0.8); }
+}
+
+.output-body {
+  padding: 20px 24px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #80e8a8;
+  line-height: 1.85;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.output-empty {
+  font-style: italic;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* ── ERROR / LOADING ─────────────────────────────────────────────── */
+.state-msg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 12px;
+  text-align: center;
+}
+
+.state-icon { font-size: 48px; opacity: 0.5; }
+.state-title { font-size: 18px; font-weight: 700; color: var(--muted); }
+.state-sub {
+  font-size: 12px;
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--border);
+  max-width: 380px;
+  line-height: 1.7;
+}
+
+/* ── SCROLLBAR ───────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-eyebrow">estudos / progresso</div>
+    <div class="logo-title">Java<span>.dev</span></div>
+  </div>
+
+  <div class="sidebar-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-pkg">–</div>
+      <div class="stat-label">Packages</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-cls">–</div>
+      <div class="stat-label">Classes</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-tags">–</div>
+      <div class="stat-label">Conceitos</div>
+    </div>
+  </div>
+
+  <div class="sidebar-search">
+    <input
+      class="search-input"
+      type="text"
+      placeholder="buscar classe..."
+      id="search-input"
+      oninput="onSearch(this.value)"
+    />
+  </div>
+
+  <div id="pkg-list"></div>
+</aside>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <div class="breadcrumb" id="breadcrumb">
+      <span>java.estudos</span>
+    </div>
+    <div class="topbar-right">
+      <span class="last-updated" id="last-updated"></span>
+      <button class="refresh-btn" onclick="refreshData()">
+        <span class="refresh-icon" id="refresh-icon">↺</span>
+        recarregar
+      </button>
+    </div>
+  </div>
+
+  <div id="content">
+    <div id="loading" class="state-msg">
+      <div class="state-icon">⏳</div>
+      <div class="state-title">Carregando...</div>
+      <div class="state-sub">Lendo data.json</div>
+    </div>
+
+    <div id="error" class="state-msg" style="display:none">
+      <div class="state-icon">⚠️</div>
+      <div class="state-title">data.json não encontrado</div>
+      <div class="state-sub">
+        Execute o scanner na raiz do projeto:<br/><br/>
+        <strong style="color:var(--accent2)">python scan.py</strong><br/><br/>
+        Depois recarregue a página ou clique em "recarregar".
+      </div>
+    </div>
+
+    <div id="welcome" style="display:none" class="state-msg">
+      <div class="welcome-glyph">☕</div>
+      <div class="welcome-title">Selecione uma classe</div>
+      <div class="welcome-hint">
+        Escolha um exercício na sidebar para ver código, descrição e output.
+      </div>
+      <div class="welcome-cmd">python scan.py  →  atualiza a lista</div>
+    </div>
+
+    <div id="exercise-view"></div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+<script>
+// ── STATE ──────────────────────────────────────────────────────────────────
+let allData        = [];
+let currentEx      = null;
+let currentTab     = 'desc';
+let searchQuery    = '';
+
+// ── LOAD DATA ──────────────────────────────────────────────────────────────
+async function loadData() {
+  try {
+    const res = await fetch(`data.json?t=${Date.now()}`);
+    if (!res.ok) throw new Error('not found');
+    const data = await res.json();
+    allData = data;
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+async function init() {
+  show('loading');
+  const ok = await loadData();
+  if (!ok) { show('error'); return; }
+  renderAll();
+  show('welcome');
+  updateTimestamp();
+}
+
+async function refreshData() {
+  const btn = document.querySelector('.refresh-btn');
+  btn.classList.add('spinning');
+  document.getElementById('refresh-icon').textContent = '↺';
+
+  const ok = await loadData();
+  setTimeout(() => btn.classList.remove('spinning'), 600);
+
+  if (!ok) { show('error'); return; }
+
+  const prevEx = currentEx;
+  renderAll();
+
+  // Re-seleciona o exercício atual se ainda existir
+  if (prevEx) {
+    const found = allData.find(
+      e => e.pkg === prevEx.pkg && e.className === prevEx.className
+    );
+    if (found) { showExercise(found); return; }
+  }
+
+  show('welcome');
+  updateTimestamp();
+}
+
+function updateTimestamp() {
+  const el = document.getElementById('last-updated');
+  const now = new Date();
+  el.textContent = `atualizado ${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}`;
+}
+
+// ── RENDER SIDEBAR ─────────────────────────────────────────────────────────
+function renderAll() {
+  const filtered = searchQuery
+    ? allData.filter(e =>
+        e.className.toLowerCase().includes(searchQuery) ||
+        e.pkg.toLowerCase().includes(searchQuery) ||
+        e.title.toLowerCase().includes(searchQuery) ||
+        (e.tags || []).some(t => t.toLowerCase().includes(searchQuery))
+      )
+    : allData;
+
+  // Stats
+  const pkgs = new Set(allData.map(e => e.pkg));
+  const allTags = new Set(allData.flatMap(e => e.tags || []));
+  document.getElementById('stat-pkg').textContent = pkgs.size;
+  document.getElementById('stat-cls').textContent = allData.length;
+  document.getElementById('stat-tags').textContent = allTags.size;
+
+  // Group by package
+  const pkgMap = {};
+  filtered.forEach(ex => {
+    if (!pkgMap[ex.pkg]) pkgMap[ex.pkg] = [];
+    pkgMap[ex.pkg].push(ex);
+  });
+
+  const list = document.getElementById('pkg-list');
+  list.innerHTML = '';
+
+  if (Object.keys(pkgMap).length === 0) {
+    list.innerHTML = `<div style="padding:20px 16px;font-size:12px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-align:center;">nenhum resultado</div>`;
+    return;
+  }
+
+  Object.entries(pkgMap).sort(([a],[b]) => a.localeCompare(b)).forEach(([pkg, exercises]) => {
+    const isActive = currentEx && exercises.includes(currentEx);
+    const isOpen   = isActive || !!searchQuery;
+
+    const group = document.createElement('div');
+    group.className = 'pkg-group';
+
+    const header = document.createElement('div');
+    header.className = 'pkg-header' + (isOpen ? ' open' : '');
+    header.innerHTML = `
+      <span style="font-size:13px">📦</span>
+      <span>${pkg}</span>
+      <span class="pkg-count">${exercises.length}</span>
+      <span class="pkg-chevron">›</span>
+    `;
+    header.onclick = () => {
+      const items = group.querySelector('.pkg-items');
+      items.classList.toggle('open');
+      header.classList.toggle('open');
+    };
+
+    const items = document.createElement('div');
+    items.className = 'pkg-items' + (isOpen ? ' open' : '');
+
+    exercises.forEach(ex => {
+      const item = document.createElement('div');
+      item.className = 'class-item' + (currentEx === ex ? ' active' : '');
+      item.innerHTML = `<span class="class-icon">𝗖</span>${ex.className}.java`;
+      item.title = ex.title;
+      item.onclick = () => showExercise(ex);
+      items.appendChild(item);
+    });
+
+    group.appendChild(header);
+    group.appendChild(items);
+    list.appendChild(group);
+  });
+}
+
+// ── EXERCISE VIEW ──────────────────────────────────────────────────────────
+function showExercise(ex) {
+  currentEx = ex;
+  renderAll();
+
+  document.getElementById('breadcrumb').innerHTML = `
+    <span>java.estudos</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>${ex.pkg}</span>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-active">${ex.className}</span>
+  `;
+
+  const view = document.getElementById('exercise-view');
+  view.className = '';
+  void view.offsetWidth;
+  view.className = 'visible';
+
+  const tagsHtml = (ex.tags || []).length
+    ? `<div class="tags-row">${ex.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>`
+    : '';
+
+  const descContent = ex.description
+    ? `<div>${ex.description}</div>${tagsHtml}`
+    : `<div class="empty-desc">// sem descrição — adicione @desc no arquivo .java</div>${tagsHtml}`;
+
+  const outputContent = ex.output
+    ? ex.output
+    : `<span class="output-empty">// sem output — adicione @output no arquivo .java</span>`;
+
+  // Escape HTML for code
+  const codeEscaped = (ex.code || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  view.innerHTML = `
+    <div class="ex-meta">
+      <span class="badge">${ex.pkg}</span>
+    </div>
+    <div class="ex-title">${ex.title || ex.className}</div>
+    <div class="ex-classname">${ex.className}.java</div>
+
+    <div class="tabs">
+      <button class="tab-btn ${currentTab==='desc'?'active':''}" onclick="switchTab('desc')">Descrição</button>
+      <button class="tab-btn ${currentTab==='code'?'active':''}" onclick="switchTab('code')">Código-Fonte</button>
+      <button class="tab-btn ${currentTab==='output'?'active':''}" onclick="switchTab('output')">Output</button>
+    </div>
+
+    <div class="tab-panel ${currentTab==='desc'?'active':''}" id="tab-desc">
+      <div class="desc-card">
+        <div class="desc-card-label">// sobre este exercício</div>
+        ${descContent}
+      </div>
+    </div>
+
+    <div class="tab-panel ${currentTab==='code'?'active':''}" id="tab-code">
+      <div class="code-wrap">
+        <div class="code-bar">
+          <div class="mac-dots">
+            <div class="mac-dot" style="background:#f06060"></div>
+            <div class="mac-dot" style="background:#f0c040"></div>
+            <div class="mac-dot" style="background:#4af0a0"></div>
+          </div>
+          <span class="code-file">${ex.className}.java</span>
+          <button class="copy-btn" onclick="copyCode()">copiar</button>
+        </div>
+        <pre><code class="language-java" id="code-block">${codeEscaped}</code></pre>
+      </div>
+    </div>
+
+    <div class="tab-panel ${currentTab==='output'?'active':''}" id="tab-output">
+      <div class="output-wrap">
+        <div class="output-bar">
+          <div class="output-pulse"></div>
+          console output
+        </div>
+        <div class="output-body">${outputContent}</div>
+      </div>
+    </div>
+  `;
+
+  // Syntax highlight
+  const codeEl = document.getElementById('code-block');
+  if (codeEl) Prism.highlightElement(codeEl);
+
+  show('exercise-view');
+}
+
+// ── TABS ───────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', ['desc','code','output'][i] === tab);
+  });
+  document.querySelectorAll('.tab-panel').forEach((panel, i) => {
+    panel.classList.toggle('active', ['desc','code','output'][i] === tab);
+  });
+}
+
+// ── SEARCH ─────────────────────────────────────────────────────────────────
+function onSearch(val) {
+  searchQuery = val.toLowerCase().trim();
+  renderAll();
+}
+
+// ── COPY ───────────────────────────────────────────────────────────────────
+function copyCode() {
+  if (!currentEx?.code) return;
+  navigator.clipboard.writeText(currentEx.code).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    if (!btn) return;
+    btn.textContent = '✓ copiado';
+    setTimeout(() => btn.textContent = 'copiar', 1800);
+  });
+}
+
+// ── SHOW PANEL ─────────────────────────────────────────────────────────────
+function show(panel) {
+  ['loading','error','welcome','exercise-view'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    if (id === 'exercise-view') {
+      if (id !== panel) el.className = '';
+    } else {
+      el.style.display = id === panel ? 'flex' : 'none';
+    }
+  });
+}
+
+// ── START ──────────────────────────────────────────────────────────────────
+init();
+</script>
+</body>
+</html>

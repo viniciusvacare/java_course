@@ -1,0 +1,1030 @@
+[
+  {
+    "pkg": "abstracao",
+    "className": "Carro",
+    "title": "Carro",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package abstracao;\n\npublic abstract class Carro {\n    private String modelo;\n    public abstract void acelerar();\n    public abstract void frear();\n\n    public Carro(String modelo) {\n        this.modelo = modelo;\n    }\n\n    public void ligar() {\n        System.out.println(\"Carro de modelo \" + this.modelo + \" ligado\");\n    }\n\n    public void setModelo(String modelo) {\n        this.modelo = modelo;\n    }\n\n    public String getModelo() {\n        return modelo;\n    }\n}\n",
+    "output": "",
+    "file": "src/abstracao/Carro.java"
+  },
+  {
+    "pkg": "abstracao",
+    "className": "CarroDeCorrida",
+    "title": "CarroDeCorrida",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package abstracao;\n\npublic class CarroDeCorrida extends Carro {\n    public CarroDeCorrida(String modelo) {\n        super(modelo);\n    }\n\n    @Override\n    public void acelerar() {\n        System.out.println(\"Carro \" + this.getModelo() + \" acelerando\");\n    }\n\n    @Override\n    public void frear() {\n        System.out.println(\"Carro \" + this.getModelo() + \" freando\");\n    }\n}\n",
+    "output": "",
+    "file": "src/abstracao/CarroDeCorrida.java"
+  },
+  {
+    "pkg": "abstracao.ex1",
+    "className": "FiguraGeometrica",
+    "title": "FiguraGeometrica",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package abstracao.ex1;\n\npublic abstract class FiguraGeometrica {\n    abstract double calcularArea();\n    abstract double calcularPerimetro();\n}\n",
+    "output": "",
+    "file": "src/abstracao/ex1/FiguraGeometrica.java"
+  },
+  {
+    "pkg": "abstracao.ex1",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package abstracao.ex1;\n\npublic class Main {\n    public static void main(String[] args) {\n        Retangulo retangulo = new Retangulo(5.0, 3.0);\n        System.out.println(\"Área: \" + retangulo.calcularArea());\n        System.out.println(\"Perímetro: \" + retangulo.calcularPerimetro());\n    }\n}\n",
+    "output": "",
+    "file": "src/abstracao/ex1/Main.java"
+  },
+  {
+    "pkg": "abstracao.ex1",
+    "className": "Retangulo",
+    "title": "Retangulo",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package abstracao.ex1;\n\npublic class Retangulo extends FiguraGeometrica {\n    private double base;\n    private double altura;\n\n    public Retangulo(double base, double altura) {\n        this.base = base;\n        this.altura = altura;\n    }\n\n    @Override\n    public double calcularArea() {\n        return this.base * this.altura;\n    }\n\n    @Override\n    public double calcularPerimetro() {\n        return 2 * (this.base + this.altura);\n    }\n}\n",
+    "output": "",
+    "file": "src/abstracao/ex1/Retangulo.java"
+  },
+  {
+    "pkg": "abstracao.ex2",
+    "className": "Loja",
+    "title": "Loja",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package abstracao.ex2;\n\npublic abstract class Loja {\n    String cnpj;\n    String razaoSocial;\n    boolean aberta;\n\n    public Loja(String cnpj, String razaoSocial) {\n        this.cnpj = cnpj;\n        this.razaoSocial = razaoSocial;\n    }\n\n    abstract void abrir();\n    abstract void fechar();\n    abstract void lojaAberta();\n}\n",
+    "output": "",
+    "file": "src/abstracao/ex2/Loja.java"
+  },
+  {
+    "pkg": "abstracao.ex2",
+    "className": "LojaComercial",
+    "title": "LojaComercial",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package abstracao.ex2;\n\npublic class LojaComercial extends Loja {\n\n    public LojaComercial(String cnpj, String razaoSocial) {\n        super(cnpj, razaoSocial);\n    }\n\n    @Override\n    void abrir() {\n        super.aberta = true;\n    }\n\n    @Override\n    void fechar() {\n        super.aberta = false;\n    }\n\n    @Override\n    void lojaAberta() {\n        System.out.println(super.razaoSocial + \" está \" + (super.aberta ? \"aberta\" : \"fechada\"));;\n    }\n}\n",
+    "output": "",
+    "file": "src/abstracao/ex2/LojaComercial.java"
+  },
+  {
+    "pkg": "abstracao.ex2",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package abstracao.ex2;\n\npublic class Main {\n    public static void main(String[] args) {\n        LojaComercial lojaComercial = new LojaComercial(\"1234567890\", \"Loja Comercial do Teste\");\n        lojaComercial.abrir();\n        lojaComercial.lojaAberta();\n        lojaComercial.fechar();\n        lojaComercial.lojaAberta();\n    }\n}\n",
+    "output": "",
+    "file": "src/abstracao/ex2/Main.java"
+  },
+  {
+    "pkg": "abstracao",
+    "className": "Main",
+    "title": "Classe main da aula de abstração",
+    "description": "Descrição do que o exercício demonstra",
+    "tags": [
+      "abstracao"
+    ],
+    "code": "package abstracao;\n// @title: Classe main da aula de abstração\n// @desc: Descrição do que o exercício demonstra\n// @tags: abstracao\n// @output:\n// linha 1 do output\n// linha 2 do output\n\npublic class Main {\n    public static void main(String[] args) {\n        CarroDeCorrida carroDeCorrida = new CarroDeCorrida(\"Ferrari\");\n        carroDeCorrida.ligar();\n        carroDeCorrida.acelerar();\n        carroDeCorrida.frear();\n    }\n}\n",
+    "output": "linha 1 do output\nlinha 2 do output\n\npublic class Main {\n    public static void main(String[] args) {\n        CarroDeCorrida carroDeCorrida = new CarroDeCorrida(\"Ferrari\");\n        carroDeCorrida.ligar();\n        carroDeCorrida.acelerar();\n        carroDeCorrida.frear();\n    }\n}",
+    "file": "src/abstracao/Main.java"
+  },
+  {
+    "pkg": "annotations",
+    "className": "App",
+    "title": "App",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package annotations;\n\npublic class App {\n    public static void main(String[] args) {\n        Exemplo ex1 = new Exemplo(\"Tester da Silva\", 12344);\n\n        ex1.retornaMensagem();\n    }\n}\n",
+    "output": "",
+    "file": "src/annotations/App.java"
+  },
+  {
+    "pkg": "annotations",
+    "className": "Exemplo",
+    "title": "Exemplo",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package annotations;\npublic class Exemplo extends ExemploHeranca {\n    private int salario;\n\n    public Exemplo(String nome, int salario) {\n        super(nome);\n        this.salario = salario;\n    }\n\n    public void setSalario(int valor) {\n        this.salario = valor;\n    }\n    \n    @Override\n    public void retornaMensagem() {\n        super.retornaMensagem();\n        System.out.println(\"eai meu mano \" + super.getNome());\n    }\n}\n",
+    "output": "",
+    "file": "src/annotations/Exemplo.java"
+  },
+  {
+    "pkg": "annotations",
+    "className": "ExemploHeranca",
+    "title": "ExemploHeranca",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package annotations;\n\npublic class ExemploHeranca {\n    private final String nome;\n\n    public ExemploHeranca(String nome) {\n        this.nome = nome;\n    }\n\n    public void retornaMensagem() {\n        System.out.println(\"eai \" + this.nome);\n    }\n\n    public String getNome() {\n        return this.nome.toUpperCase();\n    }\n}\n",
+    "output": "",
+    "file": "src/annotations/ExemploHeranca.java"
+  },
+  {
+    "pkg": "arrays",
+    "className": "Exercicio1",
+    "title": "Exercicio1",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package arrays;\n\nimport java.util.Random;\n\npublic class Exercicio1 {\n    private final double[] notas;\n\n    public Exercicio1(int tamanho) {\n        this.notas = new double[tamanho];\n    }\n\n    private void geraNotasAleatorias() {\n        Random random = new Random();\n        for (int i = 0; i < notas.length; i++) {\n            notas[i] = random.nextDouble() * 10;\n        }\n    }\n\n    public void exibirNotas() {\n        geraNotasAleatorias();\n        for (int i = 0; i < notas.length; i++) {\n            double notaArredondada = Math.ceil(notas[i] * 100) / 100;\n\n            if (i == notas.length - 1) {\n                System.out.print(\"Nota \" + (i + 1) + \"[\" + notaArredondada + \"]\");\n                break;\n            }\n\n            System.out.print(\"Nota \" + (i + 1) + \"[\" + notaArredondada + \"], \");\n        }\n    }\n}\n",
+    "output": "",
+    "file": "src/arrays/Exercicio1.java"
+  },
+  {
+    "pkg": "arrays",
+    "className": "Exercicio2",
+    "title": "Exercicio2",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package arrays;\n\npublic class Exercicio2 {\n    private final int[] limitador;\n\n    public Exercicio2(int limite) {\n        this.limitador = new int[limite];\n    }\n\n    private void alimentaArray() {\n        for (int i = 0; i < limitador.length; i++) {\n            limitador[i] = i + 1;\n        }\n    }\n\n    public int retornaSomaDosValores() {\n        int soma = 0;\n\n        alimentaArray();\n\n        for (int i = 0; i < limitador.length; i++) {\n            soma += limitador[i];\n        }\n\n        return soma;\n    }\n}\n",
+    "output": "",
+    "file": "src/arrays/Exercicio2.java"
+  },
+  {
+    "pkg": "arrays",
+    "className": "Exercicio3",
+    "title": "Exercicio3",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package arrays;\n\npublic class Exercicio3 {\n    private final int[] limitador;\n\n    public Exercicio3(int limite) {\n        this.limitador = new int[limite + 1];\n    }\n\n    private void alimentaArray() {\n        for (int i = 0; i < limitador.length; i++) {\n            limitador[i] = i;\n        }\n    }\n\n    private int[] retornaNumeroPar() {\n        alimentaArray();\n\n        int contador = 0;\n        for (int i = 0; i < limitador.length; i++) {\n            if (limitador[i] % 2 == 0) {\n                contador++;\n            }\n        }\n\n        int[] numeroPar = new int[contador];\n        int index = 0;\n\n        for (int i = 0; i < limitador.length; i++) {\n            if (limitador[i] % 2 == 0) {\n                numeroPar[index] = limitador[i];\n                index++;\n            }\n        }\n\n        return numeroPar;\n    }\n\n    public void imprimeNumeros () {\n        int[] numeros = new int[retornaNumeroPar().length];\n\n        for (int i = 0; i < numeros.length; i++) {\n            numeros[i] = retornaNumeroPar()[i];\n        }\n\n        for (int numero : numeros) {\n            System.out.println(\"Numero >>> \" + numero);\n        }\n    }\n}\n",
+    "output": "",
+    "file": "src/arrays/Exercicio3.java"
+  },
+  {
+    "pkg": "arrays",
+    "className": "TesteDeArrays",
+    "title": "TesteDeArrays",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package arrays;\n\npublic class TesteDeArrays {\n\n    public static void main(String[] args) {\n        int[] numeros = new int[3];\n        numeros[0] = 1;\n        numeros[1] = 2;\n        numeros[2] = 3;\n\n        System.out.println(numeros[2]);\n        System.out.println(\"Pega o ultimo valor: \" + numeros[numeros.length - 1]);\n\n        for (int numero : numeros) {\n            System.out.println(\"Número foreach: \" + numero);\n        }\n\n        for (int i = 0; i < numeros.length; i++) {\n            System.out.println(\"Número no for: \" + numeros[i]);\n        }\n\n        Exercicio1 ex1 = new Exercicio1(3);\n\n        ex1.exibirNotas();\n\n        Exercicio2 ex2 = new Exercicio2(1000);\n\n        System.out.println();\n        System.out.println(\"Soma dos valores: \" + ex2.retornaSomaDosValores());\n\n        System.out.println();\n\n        Exercicio3 ex3 = new Exercicio3(9);\n\n        ex3.imprimeNumeros();\n    }\n}\n",
+    "output": "",
+    "file": "src/arrays/TesteDeArrays.java"
+  },
+  {
+    "pkg": "collections",
+    "className": "SetUtilizacao",
+    "title": "SetUtilizacao",
+    "description": "",
+    "tags": [
+      "Generics",
+      "Collections",
+      "OOP"
+    ],
+    "code": "package collections;\n\nimport java.util.HashSet;\nimport java.util.Set;\n\npublic class SetUtilizacao {\n    public static void main(String[] args) {\n        // Sem duplicatas - Não duplica os valores atribuidos\n        // HashSet implementa Set\n        Set<String> conjunto = new HashSet<>();\n\n        conjunto.add(\"Java\");\n        conjunto.add(\"Java\");\n        conjunto.add(\"C#\");\n        conjunto.add(\"JavaScript\");\n\n        for (String valor : conjunto) {\n            System.out.println(valor);\n        }\n    }\n}\n",
+    "output": "",
+    "file": "src/collections/SetUtilizacao.java"
+  },
+  {
+    "pkg": "fluxo",
+    "className": "IfElse",
+    "title": "IfElse",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package fluxo;\n\npublic class IfElse {\n\tprivate boolean permiteAcesso;\n\n\tpublic boolean isPermiteAcesso() {\n\t\treturn permiteAcesso;\n\t}\n\n\tpublic void setPermiteAcesso(boolean permiteAcesso) {\n\t\tthis.permiteAcesso = permiteAcesso;\n\t}\n}\n",
+    "output": "",
+    "file": "src/fluxo/IfElse.java"
+  },
+  {
+    "pkg": "fluxo",
+    "className": "Switch",
+    "title": "Switch",
+    "description": "",
+    "tags": [
+      "Lambda",
+      "OOP"
+    ],
+    "code": "package fluxo;\n\npublic class Switch {\n    public String retornaDiaPorEscritoComSwitchExpression(int dia) {\n        switch (dia) {\n            case 1:\n                return \"Domingo\";\n            case 2:\n                return \"Segunda-feira\";\n            case 3:\n                return \"Terça-feira\";\n            case 4:\n                return \"Quarta-feira\";\n            case 5:\n                return \"Quinta-feira\";\n            case 6:\n                return \"Sexta-feira\";\n            case 7:\n                return \"Sábado\";\n            default:\n                return \"Dia não existe\";\n        }\n    }\n\n    public String retornaDiaPorEscritoComSwitchInitialization(int dia) {\n        return switch (dia) {\n            case 1 -> \"Domingo\";\n            case 2 -> \"Segunda-feira\";\n            case 3 -> \"Terça-feira\";\n            case 4 -> \"Quarta-feira\";\n            case 5 -> \"Quinta-feira\";\n            case 6 -> \"Sexta-feira\";\n            case 7 -> \"Sábado\";\n            default -> \"Dia não existe\";\n        };\n    }\n\n    public String validaSeEhDiaUtil(int dia) {\n        return switch (dia) {\n            case 1, 7 -> \"Final de semana\";\n            case 2, 3, 4, 5, 6 -> \"Dia útil\";\n            default -> \"Inexistente\";\n        };\n    }\n\n}\n",
+    "output": "",
+    "file": "src/fluxo/Switch.java"
+  },
+  {
+    "pkg": "fundamentos",
+    "className": "CalcularAreaRetangulo",
+    "title": "CalcularAreaRetangulo",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package fundamentos;\n\npublic class CalcularAreaRetangulo {\n    public CalcularAreaRetangulo(double largura, double altura) {\n        this.largura = largura;\n        this.altura = altura;\n    }\n\n    double largura, altura;\n\n    public double calcularAreaDeUmRetangulo() {\n        return this.largura * this.altura;\n    }\n}\n",
+    "output": "",
+    "file": "src/fundamentos/CalcularAreaRetangulo.java"
+  },
+  {
+    "pkg": "fundamentos",
+    "className": "ControleEstoquePadaria",
+    "title": "ControleEstoquePadaria",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package fundamentos;\n\nimport geral.Util;\n\npublic class ControleEstoquePadaria {\n    public ControleEstoquePadaria(int quantidadeFarinha, int quantidadeAcucar) {\n        this.quantidadeFarinha = quantidadeFarinha;\n        this.quantidadeAcucar = quantidadeAcucar;\n    }\n\n    int quantidadeFarinha;\n    int quantidadeAcucar;\n\n    public void setQuantidadeFarinha(int quantidadeFarinha) {\n        this.quantidadeFarinha = quantidadeFarinha;\n    }\n\n    public void setQuantidadeAcucar(int quantidadeAcucar) {\n        this.quantidadeAcucar = quantidadeAcucar;\n    }\n\n    public int getQuantidadeFarinha() {\n        return quantidadeFarinha;\n    }\n\n    public int getQuantidadeAcucar() {\n        return quantidadeAcucar;\n    }\n\n    public void adicionarAoEstoque(String tipo, int quantidade) {\n        if (Util.removerAcentos(tipo).equalsIgnoreCase(\"farinha\")) {\n            this.quantidadeFarinha += quantidade;\n        } else if (Util.removerAcentos(tipo).equalsIgnoreCase(\"acucar\")) {\n            this.quantidadeAcucar += quantidade;\n        }\n    }\n\n    public void adicionarAoEstoque(int quantidade) {\n        this.quantidadeFarinha += quantidade;\n        this.quantidadeAcucar += quantidade;\n    }\n\n    public void exibeQuantidade() {\n        System.out.println(\"Quantidade de Farinha: \" + getQuantidadeFarinha());\n        System.out.println(\"Quantidade de Açucar: \" + getQuantidadeAcucar());\n        System.out.println(\"-----------------------------------\");\n    }\n}\n",
+    "output": "",
+    "file": "src/fundamentos/ControleEstoquePadaria.java"
+  },
+  {
+    "pkg": "fundamentos",
+    "className": "InferenciaDeTipo",
+    "title": "InferenciaDeTipo",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package fundamentos;\n\npublic class InferenciaDeTipo {\n    public int retornaValorEmDobro(int valor) {\n        return valor * 2;\n    }\n}\n",
+    "output": "",
+    "file": "src/fundamentos/InferenciaDeTipo.java"
+  },
+  {
+    "pkg": "fundamentos",
+    "className": "PromocaoAutomatica",
+    "title": "PromocaoAutomatica",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package fundamentos;\n\npublic class PromocaoAutomatica {\n    int a = 10;\n    float b = 1.5f;\n    float c = a + b;\n\n    int d = 100;\n    double e = 25.56;\n    double f = d + e;\n\n    public float getC() {\n        return c;\n    }\n\n    public double getF() {\n        return f;\n    }\n}\n",
+    "output": "",
+    "file": "src/fundamentos/PromocaoAutomatica.java"
+  },
+  {
+    "pkg": "generics",
+    "className": "CaixaDeCoisas",
+    "title": "CaixaDeCoisas",
+    "description": "",
+    "tags": [
+      "Generics",
+      "OOP"
+    ],
+    "code": "package generics;\n\npublic class CaixaDeCoisas<T> {\n    private T conteudo;\n\n    public T getConteudo() {\n        return conteudo;\n    }\n\n    public void setConteudo(T conteudo) {\n        this.conteudo = conteudo;\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/CaixaDeCoisas.java"
+  },
+  {
+    "pkg": "generics.ex1",
+    "className": "Cesto",
+    "title": "Cesto",
+    "description": "",
+    "tags": [
+      "Generics",
+      "OOP"
+    ],
+    "code": "package generics.ex1;\n\npublic class Cesto<T> {\n    private T conteudo;\n\n    public void guardar(T conteudo) {\n        this.conteudo = conteudo;\n    }\n\n    public T pegar() {\n        return conteudo;\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ex1/Cesto.java"
+  },
+  {
+    "pkg": "generics.ex1",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "Generics",
+      "OOP"
+    ],
+    "code": "package generics.ex1;\n\npublic class Main {\n    public static void main(String[] args) {\n        Cesto<Peixe> peixeNoCesto = new Cesto<>();\n        Cesto<Polvo> polvoNoCesto = new Cesto<>();\n\n        peixeNoCesto.guardar(new Peixe(\"Tilapia\", 1.30));\n        polvoNoCesto.guardar(new Polvo(\"Polvo-alga\", 2));\n\n        System.out.println(peixeNoCesto.pegar().nome);\n        System.out.println(polvoNoCesto.pegar().nome);\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ex1/Main.java"
+  },
+  {
+    "pkg": "generics.ex1",
+    "className": "Peixe",
+    "title": "Peixe",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package generics.ex1;\n\npublic class Peixe {\n    String nome;\n    double tamanho;\n\n    public Peixe(String nome, double tamanho) {\n        this.nome = nome;\n        this.tamanho = tamanho;\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ex1/Peixe.java"
+  },
+  {
+    "pkg": "generics.ex1",
+    "className": "Polvo",
+    "title": "Polvo",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package generics.ex1;\n\npublic class Polvo {\n    String nome;\n    double tamanho;\n\n    public Polvo(String nome, double tamanho) {\n        this.nome = nome;\n        this.tamanho = tamanho;\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ex1/Polvo.java"
+  },
+  {
+    "pkg": "generics.ex2",
+    "className": "Caixa",
+    "title": "Caixa",
+    "description": "",
+    "tags": [
+      "Generics",
+      "Exception",
+      "OOP"
+    ],
+    "code": "package generics.ex2;\n\npublic class Caixa<T> {\n    private T[] elementos;\n    private int capacidade;\n\n    @SuppressWarnings(\"unchecked\")\n    public Caixa(int capacidade) {\n        this.capacidade = capacidade;\n        this.elementos = (T[]) new Object[capacidade];\n    }\n\n    public void adicionar(T elemento, int indice) {\n        if (indice < 0 || indice >= capacidade) {\n            throw new IndexOutOfBoundsException(\"Índice \" + indice + \" fora dos limites. Capacidade: \" + capacidade);\n        }\n        elementos[indice] = elemento;\n    }\n\n    public T obter(int indice) {\n        if (indice < 0 || indice >= capacidade) {\n            throw new IndexOutOfBoundsException(\"Índice \" + indice + \" fora dos limites. Capacidade: \" + capacidade);\n        }\n        return elementos[indice];\n    }\n\n    public int getCapacidade() {\n        return capacidade;\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ex2/Caixa.java"
+  },
+  {
+    "pkg": "generics.ex2",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "Generics",
+      "OOP"
+    ],
+    "code": "package generics.ex2;\n\npublic class Main {\n    public static void main(String[] args) {\n        Caixa<String> caixa = new Caixa<>(3);\n        caixa.adicionar(\"Maçã\", 0);\n        caixa.adicionar(\"Banana\", 1);\n        caixa.adicionar(\"Laranja\", 2);\n\n        System.out.println(caixa.obter(1));\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ex2/Main.java"
+  },
+  {
+    "pkg": "generics",
+    "className": "Caixa",
+    "title": "Caixa",
+    "description": "",
+    "tags": [
+      "Generics",
+      "OOP"
+    ],
+    "code": "package generics;\n\nclass Caixa<T> {\n    private T conteudo;\n\n    public void setConteudo(T conteudo) {\n        this.conteudo = conteudo;\n    }\n\n    public T getConteudo() {\n        return conteudo;\n    }\n}\n\npublic class ExemploDeClasse {\n    public static void main(String[] args) {\n        Caixa<Integer> caixaDeNumero = new Caixa<>();\n        caixaDeNumero.setConteudo(100);\n        System.out.println(caixaDeNumero.getConteudo());\n\n        Caixa<String> caixaDeTexto = new Caixa<>();\n        caixaDeTexto.setConteudo(\"Texto\");\n        System.out.println(caixaDeTexto.getConteudo());\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/ExemploDeClasse.java"
+  },
+  {
+    "pkg": "generics",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "Generics",
+      "OOP"
+    ],
+    "code": "package generics;\n\npublic class Main {\n    public static void main(String[] args) {\n        CaixaDeCoisas<String> caixaDeTexto = new CaixaDeCoisas<>();\n        caixaDeTexto.setConteudo(\"Texto\");\n        System.out.println(caixaDeTexto.getConteudo());\n\n        CaixaDeCoisas<Integer> caixaDeNumero = new CaixaDeCoisas<>();\n        caixaDeNumero.setConteudo(10);\n        System.out.println(caixaDeNumero.getConteudo());\n\n        System.out.println(caixaDeTexto.getClass().getName());\n    }\n}\n",
+    "output": "",
+    "file": "src/generics/Main.java"
+  },
+  {
+    "pkg": "geral",
+    "className": "Util",
+    "title": "Util",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package geral;\n\nimport java.text.Normalizer;\n\npublic abstract class Util {\n    public static String removerAcentos(String texto) {\n        if (texto == null) return null;\n        return Normalizer.normalize(texto, Normalizer.Form.NFD).replaceAll(\"\\\\p{InCombiningDiacriticalMarks}+\", \"\");\n    }\n}\n",
+    "output": "",
+    "file": "src/geral/Util.java"
+  },
+  {
+    "pkg": "heranca",
+    "className": "App",
+    "title": "App",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package heranca;\n\npublic class App {\n    public static void main(String[] args) {\n        Mage m1 = new Mage();\n        Mage m2 = new Mage(100, 500);\n\n        m1.attack();\n        m2.attack();\n        System.out.println(m2.getMana());\n\n        m1.castSpell(\"fire bolt\", 20);\n        m1.castSpell(\"fire bolt\", 10);\n    }\n}\n",
+    "output": "",
+    "file": "src/heranca/App.java"
+  },
+  {
+    "pkg": "heranca",
+    "className": "CharacterClass",
+    "title": "CharacterClass",
+    "description": "",
+    "tags": [
+      "Polimorfismo",
+      "Exception",
+      "OOP"
+    ],
+    "code": "package heranca;\n\npublic class CharacterClass {\n\n    private final int damage;\n\n    public CharacterClass(int damage) {\n        if (damage < 0) {\n            throw new IllegalArgumentException(\"Damage não pode ser negativo\");\n        }\n        this.damage = damage;\n    }\n\n    public void attack() {\n        System.out.println(\"Atacando mob com \" + damage + \" de dano\");\n    }\n\n    public int getDamage() {\n        return damage;\n    }\n\n    @Override\n    public String toString() {\n        return \"CharacterClass{damage=\" + damage + \"}\";\n    }\n}\n",
+    "output": "",
+    "file": "src/heranca/CharacterClass.java"
+  },
+  {
+    "pkg": "heranca",
+    "className": "Exercicio1",
+    "title": "Exercicio1",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package heranca;\n\npublic class Exercicio1 {\n    public static void main(String[] args) {\n        Carro c1 = new Carro();\n\n        c1.acelerar();\n    }\n}\n\nclass Veiculo {\n    public void acelerar() {\n        System.out.println(\"Veiculo acelerando\");\n    }\n}\n\nclass Carro extends Veiculo {\n    @Override\n    public void acelerar() {\n        System.out.println(\"Carro acelerando\");\n        super.acelerar();\n    }\n}",
+    "output": "",
+    "file": "src/heranca/Exercicio1.java"
+  },
+  {
+    "pkg": "heranca",
+    "className": "Exercicio2",
+    "title": "Exercicio2",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package heranca;\n\npublic class Exercicio2 {\n    public static void main(String[] args) {\n        Assistente as1 = new Assistente(1500.00);\n\n        as1.addAumento(10);\n        as1.addAumento(10);\n        as1.addAumento(10);\n        as1.addAumento(10);\n\n        System.out.println(as1.getSalario());\n        System.out.println(as1.ganhoAnual());\n    }\n}\n\nclass Funcionario {\n    private double salario;\n\n    public Funcionario(double salario) {\n        this.salario = salario;\n    }\n\n    public void addAumento(double porcentagem) {\n        double novoSalario = this.salario * porcentagem / 100;\n        System.out.println(\"Seu salario foi de \" + this.salario + \" para \" + (this.salario + novoSalario));\n        this.salario += novoSalario;\n    }\n\n    public double ganhoAnual() {\n        return Math.round(this.salario * 12);\n    }\n\n    public double getSalario() {\n        return salario;\n    }\n\n    public void setSalario(double salario) {\n        this.salario = salario;\n    }\n}\n\nclass Assistente extends Funcionario {\n    public Assistente(double salario) {\n        super(salario);\n    }\n\n    @Override\n    public double ganhoAnual() {\n        return (super.getSalario() * 12) + 1000;\n    }\n}\n\n",
+    "output": "",
+    "file": "src/heranca/Exercicio2.java"
+  },
+  {
+    "pkg": "heranca",
+    "className": "Mage",
+    "title": "Mage",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "Exception",
+      "OOP"
+    ],
+    "code": "package heranca;\n\npublic class Mage extends CharacterClass {\n\n    private int mana;\n    private static final int DEFAULT_DAMAGE = 15;\n    private static final int DEFAULT_MANA = 100;\n\n    public Mage(int damage, int mana) {\n        super(damage);\n        if (mana < 0) {\n            throw new IllegalArgumentException(\"Mana não pode ser negativo\");\n        }\n        this.mana = mana;\n    }\n\n    public Mage() {\n        this(DEFAULT_DAMAGE, DEFAULT_MANA);\n    }\n\n    @Override\n    public void attack() {\n        System.out.println(\"Mago lança feitiço causando \" + getDamage() + \" de dano mágico!\");\n    }\n\n    public void castSpell(String spellName, int spellValue) {\n        if (mana >= spellValue) {\n            setMana(getMana() - spellValue);\n            System.out.println(\"Mago lança \" + spellName + \" gastando \" + spellValue + \" de mana!\");\n        } else {\n            System.out.println(\"Mana insuficiente para lançar \" + spellName);\n        }\n    }\n\n    public int getMana() {\n        return mana;\n    }\n\n    private void setMana(int mana) {\n        this.mana = mana;\n    }\n\n    @Override\n    public String toString() {\n        return \"Mage{damage=\" + getDamage() + \", mana=\" + mana + \"}\";\n    }\n}",
+    "output": "",
+    "file": "src/heranca/Mage.java"
+  },
+  {
+    "pkg": "interfaces",
+    "className": "App",
+    "title": "App",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package interfaces;\n\npublic class App {\n    public static void main(String[] args) {\n        Restaurante restaurante = new Restaurante();\n        restaurante.exibeCardapio();\n        restaurante.adicionaItem(\"Pizza\");\n        restaurante.removeItem(\"Pizza\");\n        restaurante.atualizaItem(\"Pizza\");\n        restaurante.exibeItem(\"Pizza\");\n        restaurante.exibeObjeto();\n\n        restaurante.exibeObjetoComDefault();\n        Objeto.exibeObjetoComStatic();\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/App.java"
+  },
+  {
+    "pkg": "interfaces",
+    "className": "Cardapio",
+    "title": "Cardapio",
+    "description": "",
+    "tags": [
+      "Interface",
+      "Herança"
+    ],
+    "code": "package interfaces;\n\npublic interface Cardapio extends Objeto {\n    void exibeCardapio();\n    void adicionaItem(String item);\n    void removeItem(String item);\n    void atualizaItem(String item);\n    void exibeItem(String item);\n}\n",
+    "output": "",
+    "file": "src/interfaces/Cardapio.java"
+  },
+  {
+    "pkg": "interfaces.ex1",
+    "className": "Caminhao",
+    "title": "Caminhao",
+    "description": "",
+    "tags": [
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package interfaces.ex1;\n\npublic class Caminhao implements Veiculo {\n    private String tipo;\n\n    @Override\n    public void iniciar() {\n        System.out.println(this.tipo + \" iniciando\");\n    }\n\n    @Override\n    public void parar() {\n        System.out.println(this.tipo + \" parando\");\n    }\n\n    @Override\n    public String getTipo() {\n        return this.tipo;\n    }\n\n    @Override\n    public void setTipo(String tipo) {\n        this.tipo = tipo;\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex1/Caminhao.java"
+  },
+  {
+    "pkg": "interfaces.ex1",
+    "className": "Carro",
+    "title": "Carro",
+    "description": "",
+    "tags": [
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package interfaces.ex1;\n\npublic class Carro implements Veiculo {\n    private String tipo;\n\n    @Override\n    public void iniciar() {\n        System.out.println(this.tipo + \" iniciando\");\n    }\n\n    @Override\n    public void parar() {\n        System.out.println(this.tipo + \" parando\");\n    }\n\n    @Override\n    public String getTipo() {\n        return this.tipo;\n    }\n\n    @Override\n    public void setTipo(String tipo) {\n        this.tipo = tipo;\n    }\n\n    @Override\n    public void buzinar() {\n        System.out.println(this.tipo + \" buzinando\");\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex1/Carro.java"
+  },
+  {
+    "pkg": "interfaces.ex1",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package interfaces.ex1;\n\npublic class Main {\n    public static void main(String[] args) {\n        Carro carro = new Carro();\n        carro.setTipo(\"Carro\");\n        carro.iniciar();\n        carro.parar();\n        carro.buzinar();\n\n        Caminhao caminhao = new Caminhao();\n        caminhao.setTipo(\"Caminhao\");\n        caminhao.iniciar();\n        caminhao.parar();\n        caminhao.buzinar();\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex1/Main.java"
+  },
+  {
+    "pkg": "interfaces.ex1",
+    "className": "Veiculo",
+    "title": "Veiculo",
+    "description": "",
+    "tags": [
+      "Interface"
+    ],
+    "code": "package interfaces.ex1;\n\npublic interface Veiculo {\n    String tipo = \"Veiculo\";\n    void iniciar();\n    void parar();\n    String getTipo();\n    void setTipo(String tipo);\n\n    default void buzinar() {\n        System.out.println(Veiculo.tipo + \" buzinando\");\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex1/Veiculo.java"
+  },
+  {
+    "pkg": "interfaces.ex2",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package interfaces.ex2;\n\npublic class Main {\n    public static void main(String[] args) {\n        Pedido pedido = new Pedido();\n        pedido.adicionarItem(\"Pizza\", 25.0);\n        pedido.adicionarItem(\"Bebida\", 5.0);\n        pedido.adicionarItem(\"Batata Frita\", 15.0);\n        pedido.adicionarItem(\"Sobremesa\", 10.0);\n        System.out.println(\"Total: \" + pedido.calcularTotal());\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex2/Main.java"
+  },
+  {
+    "pkg": "interfaces.ex2",
+    "className": "Pedido",
+    "title": "Pedido",
+    "description": "",
+    "tags": [
+      "HashMap",
+      "Polimorfismo",
+      "Collections",
+      "OOP"
+    ],
+    "code": "package interfaces.ex2;\n\nimport java.util.HashMap;\nimport java.util.Map;\n\npublic class Pedido implements PedidoRestaurante {\n    Map<String, Double> itens = new HashMap<>();\n\n    @Override\n    public void adicionarItem(String item, double preco) {\n        this.itens.put(item, preco);\n        System.out.println(\"Item adicionado: \" + item + \" - R$ \" + preco);\n    }\n\n    @Override\n    public double calcularTotal() {\n        double valorTotal = 0;\n\n        for (Map.Entry<String, Double> entry : this.itens.entrySet()) {\n            valorTotal += entry.getValue();\n        }\n\n        return valorTotal;\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex2/Pedido.java"
+  },
+  {
+    "pkg": "interfaces.ex2",
+    "className": "PedidoRestaurante",
+    "title": "PedidoRestaurante",
+    "description": "",
+    "tags": [
+      "Interface"
+    ],
+    "code": "package interfaces.ex2;\n\npublic interface PedidoRestaurante {\n    void adicionarItem(String item, double preco);\n    double calcularTotal();\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex2/PedidoRestaurante.java"
+  },
+  {
+    "pkg": "interfaces.ex3",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package interfaces.ex3;\n\npublic class Main {\n    public static void main(String[] args) {\n        ProdutoImpl produto = new ProdutoImpl(\"Produto 1\", 10);\n        produto.adicionarQuantidade(5);\n        produto.removerQuantidade(30);\n        System.out.println(\"Nome: \" + produto.getNome());\n        System.out.println(\"Quantidade: \" + produto.getQuantidade());\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex3/Main.java"
+  },
+  {
+    "pkg": "interfaces.ex3",
+    "className": "Produto",
+    "title": "Produto",
+    "description": "",
+    "tags": [
+      "Interface"
+    ],
+    "code": "package interfaces.ex3;\n\npublic interface Produto {\n    String nome = \"\";\n    int quantidade = 0;\n}\n",
+    "output": "",
+    "file": "src/interfaces/ex3/Produto.java"
+  },
+  {
+    "pkg": "interfaces.ex3",
+    "className": "ProdutoImpl",
+    "title": "ProdutoImpl",
+    "description": "",
+    "tags": [
+      "Exception",
+      "OOP"
+    ],
+    "code": "package interfaces.ex3;\n\npublic class ProdutoImpl implements Produto {\n    String nome;\n    int quantidade;\n\n    public ProdutoImpl(String nome, int quantidade) {\n        this.nome = nome;\n        this.quantidade = quantidade;\n    }\n\n    public void adicionarQuantidade(int quantidade) {\n        this.quantidade += quantidade;\n    }\n\n    public void removerQuantidade(int quantidade) {\n        if (this.quantidade - quantidade < 0) {\n            throw new RuntimeException(\"Quantidade insuficiente\");\n        }\n        this.quantidade -= quantidade;\n    }\n\n    public String getNome() {\n        return this.nome;\n    }\n\n    public int getQuantidade() {\n        return this.quantidade;\n    }\n}\n\n",
+    "output": "",
+    "file": "src/interfaces/ex3/ProdutoImpl.java"
+  },
+  {
+    "pkg": "interfaces",
+    "className": "Objeto",
+    "title": "Objeto",
+    "description": "",
+    "tags": [
+      "Interface"
+    ],
+    "code": "package interfaces;\n\npublic interface Objeto {\n    // Método abstrato\n    void exibeObjeto();\n\n    // Método default\n    default void exibeObjetoComDefault() {\n        System.out.println(\"Exibindo objeto com default\");\n    }\n\n    // Método static\n    static void exibeObjetoComStatic() {\n        System.out.println(\"Exibindo objeto com static\");\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/Objeto.java"
+  },
+  {
+    "pkg": "interfaces",
+    "className": "Restaurante",
+    "title": "Restaurante",
+    "description": "",
+    "tags": [
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package interfaces;\n\npublic class Restaurante implements Cardapio {\n    @Override\n    public void exibeCardapio() {\n        System.out.println(\"Exibindo cardapio\");\n    }\n\n    @Override\n    public void adicionaItem(String item) {\n        System.out.println(\"Adicionando item: \" + item);\n    }\n\n    @Override\n    public void removeItem(String item) {\n        System.out.println(\"Removendo item: \" + item);\n    }\n\n    @Override\n    public void atualizaItem(String item) {\n        System.out.println(\"Atualizando item: \" + item);\n    }\n\n    @Override\n    public void exibeItem(String item) {\n        System.out.println(\"Exibindo item: \" + item);\n    }\n\n    @Override\n    public void exibeObjeto() {\n        System.out.println(\"Exibindo objeto\");\n    }\n}\n",
+    "output": "",
+    "file": "src/interfaces/Restaurante.java"
+  },
+  {
+    "pkg": "operadores",
+    "className": "Atribuicao",
+    "title": "Atribuicao",
+    "description": "",
+    "tags": [
+      "Exception",
+      "OOP"
+    ],
+    "code": "package operadores;\n\npublic class Atribuicao {\n    private Double valor;\n\n    public void setValor(double valorParametro) {\n        this.valor = valorParametro;\n    }\n\n    public void adicionarValor(double quantidade) {\n        this.erro();\n        this.valor += quantidade;\n    }\n\n    public void subtrairValor(double quantidade) {\n        this.valor -= quantidade;\n    }\n\n    public void dividirValor(double quantidade) {\n        this.valor /= quantidade;\n    }\n\n    public void multiplicarValor(double quantidade) {\n        this.valor *= quantidade;\n    }\n\n    public void restoValor(double quantidade) {\n        this.valor %= quantidade;\n    }\n\n    public void mostrarValorAtual() {\n        System.out.println(\"Valor atual: \" + this.valor);\n    }\n\n    public void resetarValorInicial() {\n        double VALOR_INICIAL = 100;\n        this.valor = VALOR_INICIAL;\n    }\n\n    private void erro() {\n        if (this.valor == null) {\n            throw new IllegalStateException(\"O valor não foi definido!\");\n        }\n    }\n}\n",
+    "output": "",
+    "file": "src/operadores/Atribuicao.java"
+  },
+  {
+    "pkg": "operadores",
+    "className": "Comparacao",
+    "title": "Comparacao",
+    "description": "",
+    "tags": [
+      "Lambda",
+      "OOP"
+    ],
+    "code": "package operadores;\n\npublic class Comparacao {\n    int numero1, numero2;\n\n    public boolean comparaSeValoresSaoIguais() {\n        return this.numero1 == this.numero2;\n    }\n\n    public boolean comparaSeValoresSaoDiferentes() {\n        return this.numero1 != this.numero2;\n    }\n\n    public boolean comparaSeOPrimeiroValorEhMaiorQueOSegundo() {\n        return this.numero1 > this.numero2;\n    }\n\n    public boolean comparaSeOPrimeiroValorEhMenorQueOSegundo() {\n        return this.numero1 < this.numero2;\n    }\n\n    public boolean comparaSeOPrimeiroValorEhMaiorOuIgualAoSegundo() {\n        return this.numero1 >= this.numero2;\n    }\n\n    public boolean comparaSeOPrimeiroValorEhMenorOuIgualAoSegundo() {\n        return this.numero1 <= this.numero2;\n    }\n\n    public String comparaValoresPorSinal(int tipo) {\n        return switch (tipo) {\n            case 1 -> this.comparaSeValoresSaoIguais() ? \"SÃO IGUAIS\" : \"SÃO DIFERENTES\";\n            case 2 -> this.comparaSeValoresSaoDiferentes() ? \"SÃO DIFERENTES\" : \"SÃO IGUAIS\";\n            case 3 -> this.comparaSeOPrimeiroValorEhMaiorQueOSegundo() ? \"MAIOR QUE O SEGUNDO\" : \"MENOR QUE O SEGUNDO\";\n            case 4 -> this.comparaSeOPrimeiroValorEhMenorQueOSegundo() ? \"MENOR QUE O SEGUNDO\" : \"MAIOR QUE O SEGUNDO\";\n            case 5 -> this.comparaSeOPrimeiroValorEhMaiorOuIgualAoSegundo() ? \"MAIOR OU IGUAL AO SEGUNDO\" : \"MENOR QUE O SEGUNDO\";\n            case 6 -> this.comparaSeOPrimeiroValorEhMenorOuIgualAoSegundo() ? \"MENOR OU IGUAL AO SEGUNDO\" : \"MAIOR QUE O SEGUNDO\";\n            default -> \"O tipo informado não é válido.\";\n        };\n    }\n\n    public void getSinalDeComparacao() {\n        System.out.println(\"--------------------------------------\");\n        System.out.println(\"1 == -> Igual a\");\n        System.out.println(\"2 != -> Diferente de\");\n        System.out.println(\"3 >  -> Maior que\");\n        System.out.println(\"4 <  -> Menor que\");\n        System.out.println(\"5 >= -> Maior ou igual a\");\n        System.out.println(\"6 <= -> Menor ou igual a\");\n        System.out.println(\"--------------------------------------\");\n    }\n\n    public void setNumero1(int numero1) {\n        this.numero1 = numero1;\n    }\n\n    public void setNumero2(int numero2) {\n        this.numero2 = numero2;\n    }\n\n    public int getNumero1() {\n        return this.numero1;\n    }\n\n    public int getNumero2() {\n        return this.numero2;\n    }\n}\n",
+    "output": "",
+    "file": "src/operadores/Comparacao.java"
+  },
+  {
+    "pkg": "operadores.exercicios",
+    "className": "CalculadoraSimples",
+    "title": "CalculadoraSimples",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package operadores.exercicios;\n\npublic class CalculadoraSimples {\n    public double a, b;\n\n    public void retornaValores() {\n        System.out.println(\"Soma de a e b: \" + (a + b));\n        System.out.println(\"Subtração de a por b: \" + (a - b));\n        System.out.println(\"Multiplicação de a por b: \" + (a * b));\n        System.out.println(\"Divisão de a por b: \" + (a / b));\n        System.out.println(\"Resto da divisão entre a e b: \" + (a % b));\n    }\n}\n",
+    "output": "",
+    "file": "src/operadores/exercicios/CalculadoraSimples.java"
+  },
+  {
+    "pkg": "operadores.exercicios",
+    "className": "OperadoresAtribuicaoExercicio",
+    "title": "OperadoresAtribuicaoExercicio",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package operadores.exercicios;\n\npublic class OperadoresAtribuicaoExercicio {\n    public static int valorFinal(int valorInicial) {\n      int valor = valorInicial;\n\n      valor += 3;\n      valor -= 2;\n      valor *= 4;\n      valor /= 2;\n\n      return valor;\n    }\n}\n",
+    "output": "",
+    "file": "src/operadores/exercicios/OperadoresAtribuicaoExercicio.java"
+  },
+  {
+    "pkg": "operadores",
+    "className": "Logicos",
+    "title": "Logicos",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package operadores;\n\npublic class Logicos {\n\n    public Logicos(int numero1, int numero2) {\n        this.numero1 = numero1;\n        this.numero2 = numero2;\n    }\n\n    private final int numero1;\n    private final int numero2;\n    private final int VALOR = 50;\n\n    private boolean compararSeNumerosSaoMaioresQueValor() {\n        return numero1 > VALOR && numero2 > VALOR;\n    }\n\n    private boolean compararSeNumerosSaoMaioresQueValorComNot() {\n        return !(numero1 > VALOR && numero2 > VALOR);\n    }\n\n    private boolean compararSeAlgumValorEhMaiorQueValor() {\n        return numero1 > VALOR || numero2 > VALOR;\n    }\n\n    public String resultado() {\n        String valores = numero1 + \" e \" + numero2 + \"\\n\";\n\n        String retorno = valores + (compararSeNumerosSaoMaioresQueValor() ? \"Ambos > \" + VALOR + \".\" : \"Nem ambos são > \" + VALOR + \".\");\n        retorno += \"\\n\" + (compararSeNumerosSaoMaioresQueValorComNot() ? \"Not Ambos > \" + VALOR + \".\" : \"Not Nem ambos são > \" + VALOR + \".\");\n        retorno += \"\\n\" + (compararSeAlgumValorEhMaiorQueValor() ? \"Algum valor > \" + VALOR + \".\" : \"Nenhum valor > \" + VALOR + \".\");\n\n        return retorno;\n    }\n\n}\n",
+    "output": "",
+    "file": "src/operadores/Logicos.java"
+  },
+  {
+    "pkg": "operadores",
+    "className": "Unarios",
+    "title": "Unarios",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package operadores;\n\npublic class Unarios {\n    private int valor = 0;\n\n    public void preIncremento() {\n        ++valor;\n    }\n\n    public void posIncremento() {\n        valor++;\n    }\n\n    public void preDecremento() {\n        --valor;\n    }\n\n    public void posDecremento() {\n        valor--;\n    }\n\n    public void retornaValor() {\n        System.out.println(\"Valor atual: \" + valor);\n    }\n}\n",
+    "output": "",
+    "file": "src/operadores/Unarios.java"
+  },
+  {
+    "pkg": "orientacao_objetos",
+    "className": "Carro",
+    "title": "Carro",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos;\n\npublic class Carro {\n    private String marcaDoCarro, modeloDoCarro;\n    private Integer anoDoCarro;\n\n    public Carro(String marcaDoCarro, String modeloDoCarro, Integer anoDoCarro) {\n        this.marcaDoCarro = marcaDoCarro;\n        this.modeloDoCarro = modeloDoCarro;\n        this.anoDoCarro = anoDoCarro;\n    }\n\n    public Carro(String marcaDoCarro, String modeloDoCarro) {\n        this.marcaDoCarro = marcaDoCarro;\n        this.modeloDoCarro = modeloDoCarro;\n        this.anoDoCarro = 0;\n    }\n\n    public Carro() {\n        this.marcaDoCarro = \"Desconhecida\";\n        this.modeloDoCarro = \"Desconhecido\";\n        this.anoDoCarro = 0;\n    }\n\n    public String exibirDetalhes() {\n        return \"O carro \" + this.modeloDoCarro + \" da marca \" + this.marcaDoCarro + \" é do ano \" + this.anoDoCarro;\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/Carro.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio1",
+    "className": "SalaDeAula",
+    "title": "SalaDeAula",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio1;\n\npublic class SalaDeAula {\n    private static int totalDeAlunos;\n\n    public static int exibirTotalDeAlunos() {\n        return totalDeAlunos;\n    }\n\n    public static void adicionarAluno(int totalDeAlunos) {\n        SalaDeAula.totalDeAlunos += totalDeAlunos;\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio1/SalaDeAula.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio1",
+    "className": "TesteSalaDeAula",
+    "title": "TesteSalaDeAula",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio1;\n\npublic class TesteSalaDeAula {\n    public static void main(String[] args) {\n        SalaDeAula.adicionarAluno(10);\n        SalaDeAula.adicionarAluno(30);\n        SalaDeAula.adicionarAluno(10);\n\n        System.out.println(SalaDeAula.exibirTotalDeAlunos());\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio1/TesteSalaDeAula.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio2",
+    "className": "Aplicacao",
+    "title": "Aplicacao",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio2;\n\npublic class Aplicacao {\n    public static void main(String[] args) {\n        Livro l1 = new Livro();\n        Livro l2 = new Livro(\"O Homem Mais Rico da Babilônia\", \"George Samuel Clason\");\n        Livro l3 = new Livro(\"Pai Rico, Pai Pobre\", \"Robert Kiyosaki e Sharon L. Lechter\", 1997, 35.11);\n\n        System.out.println(l2.titulo);\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio2/Aplicacao.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio2",
+    "className": "Livro",
+    "title": "Livro",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio2;\n\npublic class Livro {\n    public String titulo;\n    private String autor;\n    protected Integer anoPublicacao;\n    Double preco;\n\n    public Livro() {\n        this.titulo = \"Desconhecido\";\n        this.autor = \"Desconhecido\";\n        this.anoPublicacao = 0;\n        this.preco = 0.0;\n    };\n\n    public Livro(String consTitulo, String consAutor) {\n        this.titulo = consTitulo;\n        this.autor = consAutor;\n        this.anoPublicacao = 0;\n        this.preco = 0.0;\n    };\n\n    public Livro(String consTitulo, String consAutor, Integer consAnoPublicacao, Double consPreco) {\n        this.titulo = consTitulo;\n        this.autor = consAutor;\n        this.anoPublicacao = consAnoPublicacao;\n        this.preco = consPreco;\n    };\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio2/Livro.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio3",
+    "className": "Aplicacao",
+    "title": "Aplicacao",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio3;\n\npublic class Aplicacao {\n    public static void main(String[] args) {\n        Pessoa p1 = new Pessoa();\n\n        p1.nome = \"Fulano\";\n        p1.setIdade(25);\n        p1.endereco = \"Rua de Bosta, 195\";\n        p1.telefone = 1982039293;\n        p1.setTelefone(182938293);\n\n        System.out.println(p1.nome);\n        System.out.println(p1.getIdade());\n        System.out.println(p1.getEndereco());\n        System.out.println(p1.getTelefone());\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio3/Aplicacao.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio3",
+    "className": "Pessoa",
+    "title": "Pessoa",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio3;\n\npublic class Pessoa {\n    public String nome;\n    private Integer idade;\n    protected String endereco;\n    Integer telefone;\n\n    public Integer getIdade() {\n        return idade;\n    }\n\n    public void setIdade(Integer idade) {\n        this.idade = idade;\n    }\n\n    public String getEndereco() {\n        return endereco;\n    }\n\n    public void setEndereco(String endereco) {\n        this.endereco = endereco;\n    }\n\n    public Integer getTelefone() {\n        return telefone;\n    }\n\n    public void setTelefone(Integer telefone) {\n        this.telefone = telefone;\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio3/Pessoa.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio4",
+    "className": "Aplicacao",
+    "title": "Aplicacao",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio4;\n\npublic class Aplicacao {\n    public static void main(String[] args) {\n        Personagem p1 = new Personagem(\"Altair\", 190);\n\n        p1.dadosAtuais();\n\n        p1.tentarAumentarNivelDePoder(20);\n        p1.dadosAtuais();\n\n        p1.alterarNome(new Personagem(\"Bezios\", 200));\n        p1.dadosAtuais();\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio4/Aplicacao.java"
+  },
+  {
+    "pkg": "orientacao_objetos.exercicio4",
+    "className": "Personagem",
+    "title": "Personagem",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos.exercicio4;\n\npublic class Personagem {\n    private String nome;\n    private Integer nivelDePoder;\n\n    public Personagem(String consNome, Integer consNivelDePoder) {\n        this.nome = consNome;\n        this.nivelDePoder = consNivelDePoder;\n    }\n\n    public void tentarAumentarNivelDePoder(int nivel) {\n        this.nivelDePoder += nivel;\n    }\n\n    public void alterarNome(Personagem personagem) {\n        this.nome = personagem.nome;\n    }\n\n    public void dadosAtuais() {\n        System.out.println(this.nome + \" e \" + this.nivelDePoder + \" de poder atual\");\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/exercicio4/Personagem.java"
+  },
+  {
+    "pkg": "orientacao_objetos",
+    "className": "Funcionario",
+    "title": "Funcionario",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos;\n\npublic class Funcionario {\n\n    private String nome;\n    private Double salario;\n\n    public Funcionario(String nome, Double salario) {\n        this.nome = nome;\n        this.salario = salario;\n    }\n\n    public Funcionario(String nome) {\n        this.nome = nome;\n    }\n\n    public Funcionario() {\n    }\n\n    public Double getSalario() {\n        return salario == null ? 0 : salario;\n    }\n\n    public void setSalario(Double salario) {\n        this.salario = salario;\n    }\n\n    public String getNome() {\n        return nome;\n    }\n\n    public void setNome(String nome) {\n        this.nome = nome;\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/Funcionario.java"
+  },
+  {
+    "pkg": "orientacao_objetos",
+    "className": "Produto",
+    "title": "Produto",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package orientacao_objetos;\n\npublic class Produto {\n    private String nome;\n    private Double preco;\n    private Integer quantidadeEmEstoque;\n\n    public Produto(String nome, Double preco, Integer quantidadeEmEstoque) {\n        this.nome = nome;\n        this.preco = preco;\n        this.quantidadeEmEstoque = quantidadeEmEstoque;\n    }\n\n    public void alterarNome(Produto produto, String nome) {\n        produto.nome = nome;\n    }\n\n    public String getNome() {\n        return nome;\n    }\n\n    public void setNome(String nome) {\n        this.nome = nome;\n    }\n\n    public Double getPreco() {\n        return preco;\n    }\n\n    public void setPreco(Double preco) {\n        this.preco = preco;\n    }\n\n    public Integer getQuantidadeEmEstoque() {\n        return quantidadeEmEstoque;\n    }\n\n    public void setQuantidadeEmEstoque(Integer quantidadeEmEstoque) {\n        this.quantidadeEmEstoque = quantidadeEmEstoque;\n    }\n}\n",
+    "output": "",
+    "file": "src/orientacao_objetos/Produto.java"
+  },
+  {
+    "pkg": "polimorfismo",
+    "className": "Animal",
+    "title": "Animal",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package polimorfismo;\n\npublic abstract class Animal {\n    abstract void emitirSom();\n\n    void dormir() {\n        System.out.println(\"Zzz\");\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/Animal.java"
+  },
+  {
+    "pkg": "polimorfismo",
+    "className": "Cachorro",
+    "title": "Cachorro",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package polimorfismo;\n\npublic class Cachorro extends Animal {\n    @Override\n    void emitirSom() {\n        System.out.println(\"Au au\");\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/Cachorro.java"
+  },
+  {
+    "pkg": "polimorfismo",
+    "className": "Carro",
+    "title": "Carro",
+    "description": "",
+    "tags": [
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package polimorfismo;\n\npublic class Carro implements Veiculo {\n\n    @Override\n    public void acelerar() {\n        System.out.println(\"Carro acelerando\");\n    }\n\n    @Override\n    public void frear() {\n        System.out.println(\"Carro freando\");\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/Carro.java"
+  },
+  {
+    "pkg": "polimorfismo.ex1",
+    "className": "Caminhao",
+    "title": "Caminhao",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package polimorfismo.ex1;\n\npublic class Caminhao extends Veiculo {\n    private int eixos;\n\n    public Caminhao(String placa, int ano, int eixos) {\n        super(placa, ano);\n        this.eixos = eixos;\n    }\n\n    @Override\n    public void exibirInformacoes() {\n        super.exibirInformacoes();\n        System.out.println(\"Eixos: \" + eixos);\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/ex1/Caminhao.java"
+  },
+  {
+    "pkg": "polimorfismo.ex1",
+    "className": "GerenciadorVeiculo",
+    "title": "GerenciadorVeiculo",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package polimorfismo.ex1;\n\npublic class GerenciadorVeiculo {\n    public static void main(String[] args) {\n        Veiculo[] veiculos = new Veiculo[2];\n        veiculos[0] = new Onibus(\"ABC123\", 2022, 40);\n        veiculos[1] = new Caminhao(\"DEF456\", 2021, 6);\n\n        for (Veiculo veiculo : veiculos) {\n            veiculo.exibirInformacoes();\n            System.out.println();\n        }\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/ex1/GerenciadorVeiculo.java"
+  },
+  {
+    "pkg": "polimorfismo.ex1",
+    "className": "Onibus",
+    "title": "Onibus",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package polimorfismo.ex1;\n\npublic class Onibus extends Veiculo {\n    private int assentos;\n\n    public Onibus(String placa, int ano, int assentos) {\n        super(placa, ano);\n        this.assentos = assentos;\n    }\n\n    @Override\n    public void exibirInformacoes() {\n        super.exibirInformacoes();\n        System.out.println(\"Assentos: \" + assentos);\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/ex1/Onibus.java"
+  },
+  {
+    "pkg": "polimorfismo.ex1",
+    "className": "Veiculo",
+    "title": "Veiculo",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package polimorfismo.ex1;\n\npublic abstract class Veiculo {\n    private String placa;\n    private int ano;\n\n    public Veiculo(String placa, int ano) {\n        this.placa = placa;\n        this.ano = ano;\n    }\n\n    public void exibirInformacoes() {\n        System.out.println(\"Placa: \" + placa);\n        System.out.println(\"Ano: \" + ano);\n    };\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/ex1/Veiculo.java"
+  },
+  {
+    "pkg": "polimorfismo.ex2",
+    "className": "Soma",
+    "title": "Soma",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package polimorfismo.ex2;\n\nclass Soma extends Operacao {\n    @Override\n    void tipoDaOperacao() {\n        System.out.println(\"Soma\");\n    }\n\n    @Override\n    double calcular(double num1, double num2) {\n        return num1 + num2;\n    }\n}\n\nclass Subtracao extends Operacao {\n    @Override\n    void tipoDaOperacao() {\n        System.out.println(\"Subtracao\");\n    }\n\n    @Override\n    double calcular(double num1, double num2) {\n        return num1 - num2;\n    }\n}\n\nclass Multiplicacao extends Operacao {\n    @Override\n    void tipoDaOperacao() {\n        System.out.println(\"Multiplicacao\");\n    }\n\n    @Override\n    double calcular(double num1, double num2) {\n        return num1 * num2;\n    }\n}\n\nclass Divisao extends Operacao {\n    @Override\n    void tipoDaOperacao() {\n        System.out.println(\"Divisao\");\n    }\n\n    @Override\n    double calcular(double num1, double num2) {\n        return num1 / num2;\n    }\n}\n\npublic class Calculadora {\n    public static void main(String[] args) {\n        Operacao soma = new Soma();\n        Operacao subtracao = new Subtracao();\n        Operacao multiplicacao = new Multiplicacao();\n        Operacao divisao = new Divisao();\n\n        soma.tipoDaOperacao();\n        System.out.println(soma.calcular(10, 20));\n\n        subtracao.tipoDaOperacao();\n        System.out.println(subtracao.calcular(10, 20));\n\n        multiplicacao.tipoDaOperacao();\n        System.out.println(multiplicacao.calcular(10, 20));\n\n        divisao.tipoDaOperacao();\n        System.out.println(divisao.calcular(10, 20));\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/ex2/Calculadora.java"
+  },
+  {
+    "pkg": "polimorfismo.ex2",
+    "className": "Operacao",
+    "title": "Operacao",
+    "description": "",
+    "tags": [
+      "Abstract",
+      "OOP"
+    ],
+    "code": "package polimorfismo.ex2;\n\npublic abstract class Operacao {\n    abstract void tipoDaOperacao();\n    abstract double calcular(double num1, double num2);\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/ex2/Operacao.java"
+  },
+  {
+    "pkg": "polimorfismo",
+    "className": "Gato",
+    "title": "Gato",
+    "description": "",
+    "tags": [
+      "Herança",
+      "Polimorfismo",
+      "OOP"
+    ],
+    "code": "package polimorfismo;\n\npublic class Gato extends Animal {\n    @Override\n    void emitirSom() {\n        System.out.println(\"Miau\");\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/Gato.java"
+  },
+  {
+    "pkg": "polimorfismo",
+    "className": "Main",
+    "title": "Main",
+    "description": "",
+    "tags": [
+      "OOP"
+    ],
+    "code": "package polimorfismo;\n\npublic class Main {\n    public static void main(String[] args) {\n        Animal cachorro = new Cachorro();\n        Animal gato = new Gato();\n\n        cachorro.emitirSom();\n        gato.emitirSom();\n\n        cachorro.dormir();\n        gato.dormir();\n\n        Veiculo carro = new Carro();\n        carro.acelerar();\n        carro.frear();\n\n    }\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/Main.java"
+  },
+  {
+    "pkg": "polimorfismo",
+    "className": "Veiculo",
+    "title": "Veiculo",
+    "description": "",
+    "tags": [
+      "Interface"
+    ],
+    "code": "package polimorfismo;\n\npublic interface Veiculo {\n    void acelerar();\n    void frear();\n}\n",
+    "output": "",
+    "file": "src/polimorfismo/Veiculo.java"
+  }
+]

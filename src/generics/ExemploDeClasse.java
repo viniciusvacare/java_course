@@ -1,7 +1,5 @@
 package generics;
 
-import java.util.List;
-
 class Caixa<T> {
     private T conteudo;
 

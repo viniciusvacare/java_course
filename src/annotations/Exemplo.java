@@ -1,7 +1,4 @@
 package annotations;
-
-import jdk.jfr.Name;
-
 public class Exemplo extends ExemploHeranca {
     private int salario;
 

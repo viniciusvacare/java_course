@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Java Studies</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0f14;
+    --surface: #13161d;
+    --surface2: #1a1e28;
+    --border: #252a38;
+    --accent: #f0c040;
+    --accent2: #4af0a0;
+    --accent3: #f06060;
+    --text: #e8eaf0;
+    --muted: #6b7280;
+    --sidebar-w: 280px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Syne', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* SIDEBAR */
+  #sidebar {
+    width: var(--sidebar-w);
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    overflow-y: auto;
+  }
+
+  .sidebar-header {
+    padding: 28px 24px 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .logo-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+
+  .logo-title span { color: var(--text); }
+
+  .sidebar-stats {
+    display: flex;
+    gap: 12px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .stat {
+    flex: 1;
+    background: var(--surface2);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  .sidebar-section {
+    padding: 20px 24px 8px;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .pkg-group { margin-bottom: 6px; }
+
+  .pkg-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--muted);
+    user-select: none;
+  }
+
+  .pkg-header:hover { background: var(--surface2); color: var(--text); }
+  .pkg-header.active { color: var(--accent); }
+
+  .pkg-icon {
+    font-size: 14px;
+    width: 20px;
+    text-align: center;
+  }
+
+  .pkg-count {
+    margin-left: auto;
+    font-size: 10px;
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 2px 7px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+  }
+
+  .pkg-items {
+    display: none;
+    padding-left: 12px;
+    margin-top: 2px;
+  }
+
+  .pkg-items.open { display: block; }
+
+  .class-item {
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--muted);
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 2px;
+    border-left: 2px solid transparent;
+  }
+
+  .class-item:hover { background: var(--surface2); color: var(--text); }
+  .class-item.active {
+    color: var(--accent2);
+    border-left-color: var(--accent2);
+    background: rgba(74, 240, 160, 0.05);
+  }
+
+  .class-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    flex-shrink: 0;
+  }
+  .class-item.active .class-dot { background: var(--accent2); }
+
+  /* MAIN */
+  #main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #topbar {
+    height: 56px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .breadcrumb {
+    font-size: 12px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .breadcrumb-sep { color: var(--border); }
+  .breadcrumb-active { color: var(--accent2); }
+
+  .topbar-actions { margin-left: auto; display: flex; gap: 8px; }
+
+  .btn-add {
+    background: var(--accent);
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: 'Syne', sans-serif;
+    cursor: pointer;
+    transition: opacity 0.15s;
+    letter-spacing: 0.5px;
+  }
+  .btn-add:hover { opacity: 0.85; }
+
+  #content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+  }
+
+  /* WELCOME */
+  #welcome {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .welcome-icon { font-size: 56px; opacity: 0.3; }
+  .welcome-title { font-size: 28px; font-weight: 800; color: var(--muted); }
+  .welcome-sub { font-size: 14px; color: var(--border); max-width: 320px; line-height: 1.6; }
+
+  /* EXERCISE VIEW */
+  #exercise-view { display: none; animation: fadeIn 0.25s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+  .ex-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+
+  .ex-pkg-badge {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    white-space: nowrap;
+  }
+
+  .ex-title {
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text);
+    line-height: 1.1;
+  }
+
+  .ex-class-name {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  /* TABS */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+
+  .tab {
+    padding: 10px 20px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    transition: all 0.15s;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* DESCRIPTION */
+  .description-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    line-height: 1.8;
+    font-size: 15px;
+    color: #c8cdd8;
+  }
+
+  .description-card h3 {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-bottom: 12px;
+  }
+
+  .concept-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+
+  .tag {
+    background: rgba(240, 192, 64, 0.1);
+    border: 1px solid rgba(240, 192, 64, 0.25);
+    color: var(--accent);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+
+  /* CODE */
+  .code-wrapper {
+    background: #1a1b26;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .code-topbar {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .code-dots { display: flex; gap: 6px; }
+  .code-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-red { background: #f06060; }
+  .dot-yellow { background: #f0c040; }
+  .dot-green { background: #4af0a0; }
+
+  .code-filename {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    margin-left: 4px;
+  }
+
+  .copy-btn {
+    margin-left: auto;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    padding: 4px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  pre[class*="language-"] {
+    margin: 0 !important;
+    border-radius: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+    max-height: 460px;
+    background: #1a1b26 !important;
+  }
+
+  /* OUTPUT */
+  .output-card {
+    background: #0a0c0f;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .output-header {
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    font-size: 11px;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .output-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--accent2);
+    animation: blink 2s infinite;
+  }
+
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .output-body {
+    padding: 20px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: #a0f0c0;
+    line-height: 1.8;
+    white-space: pre;
+  }
+
+  /* ADD MODAL */
+  #modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px;
+    width: 580px;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: fadeIn 0.2s ease;
+  }
+
+  .modal-title {
+    font-size: 20px;
+    font-weight: 800;
+    margin-bottom: 24px;
+    color: var(--accent);
+  }
+
+  .field { margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; font-family: 'JetBrains Mono', monospace; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 14px;
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.15s;
+    resize: vertical;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--accent); }
+  .field select option { background: var(--surface2); }
+
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 8px 20px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .btn-cancel:hover { border-color: var(--text); color: var(--text); }
+
+  .btn-save {
+    background: var(--accent);
+    border: none;
+    color: #000;
+    border-radius: 8px;
+    padding: 8px 24px;
+    cursor: pointer;
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    transition: opacity 0.15s;
+  }
+  .btn-save:hover { opacity: 0.85; }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">estudo / progresso</div>
+    <div class="logo-title">Java<span>.dev</span></div>
+  </div>
+  <div class="sidebar-stats">
+    <div class="stat">
+      <div class="stat-num" id="stat-packages">0</div>
+      <div class="stat-label">Packages</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num" id="stat-classes">0</div>
+      <div class="stat-label">Classes</div>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="section-label">// packages</div>
+    <div id="pkg-list"></div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div id="main">
+  <div id="topbar">
+    <div class="breadcrumb" id="breadcrumb">
+      <span>java.estudos</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-add" onclick="openModal()">+ Nova Classe</button>
+    </div>
+  </div>
+
+  <div id="content">
+    <!-- Welcome -->
+    <div id="welcome">
+      <div class="welcome-icon">☕</div>
+      <div class="welcome-title">Selecione uma classe</div>
+      <div class="welcome-sub">Escolha um exercício na barra lateral para visualizar o código, descrição e output.</div>
+    </div>
+
+    <!-- Exercise view -->
+    <div id="exercise-view">
+      <div class="ex-header">
+        <div>
+          <div class="ex-pkg-badge" id="ex-pkg"></div>
+          <div class="ex-title" id="ex-title"></div>
+          <div class="ex-class-name" id="ex-classname"></div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('desc')">Descrição</div>
+        <div class="tab" onclick="switchTab('code')">Código-Fonte</div>
+        <div class="tab" onclick="switchTab('output')">Output</div>
+      </div>
+
+      <div class="tab-panel active" id="tab-desc">
+        <div class="description-card">
+          <h3>// sobre este exercício</h3>
+          <div id="ex-desc"></div>
+          <div class="concept-tags" id="ex-tags"></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-code">
+        <div class="code-wrapper">
+          <div class="code-topbar">
+            <div class="code-dots">
+              <div class="code-dot dot-red"></div>
+              <div class="code-dot dot-yellow"></div>
+              <div class="code-dot dot-green"></div>
+            </div>
+            <div class="code-filename" id="code-filename"></div>
+            <button class="copy-btn" onclick="copyCode()">copiar</button>
+          </div>
+          <pre><code class="language-java" id="ex-code"></code></pre>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="tab-output">
+        <div class="output-card">
+          <div class="output-header">
+            <div class="output-dot"></div>
+            console output
+          </div>
+          <div class="output-body" id="ex-output"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal">
+    <div class="modal-title">+ Nova Classe</div>
+
+    <div class="field">
+      <label>Package</label>
+      <input type="text" id="f-pkg" placeholder="ex: generics.ex3" />
+    </div>
+    <div class="field">
+      <label>Nome da Classe</label>
+      <input type="text" id="f-class" placeholder="ex: Pilha" />
+    </div>
+    <div class="field">
+      <label>Título / Tema</label>
+      <input type="text" id="f-title" placeholder="ex: Pilha com Generics" />
+    </div>
+    <div class="field">
+      <label>Descrição</label>
+      <textarea id="f-desc" rows="3" placeholder="Explique o objetivo do exercício..."></textarea>
+    </div>
+    <div class="field">
+      <label>Conceitos (separados por vírgula)</label>
+      <input type="text" id="f-tags" placeholder="ex: Generics, Stack, LIFO" />
+    </div>
+    <div class="field">
+      <label>Código-Fonte</label>
+      <textarea id="f-code" rows="8" placeholder="Cole o código Java aqui..."></textarea>
+    </div>
+    <div class="field">
+      <label>Output esperado</label>
+      <textarea id="f-output" rows="4" placeholder="Cole o resultado do console..."></textarea>
+    </div>
+
+    <div class="modal-actions">
+      <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="btn-save" onclick="saveExercise()">Salvar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-java.min.js"></script>
+<script>
+// ── DATA ───────────────────────────────────────────────────────────────────
+let data = [
+  {
+    pkg: "generics.ex1",
+    className: "Par",
+    title: "Par Genérico",
+    description: "Implementação de uma classe genérica que armazena um par de valores de tipos diferentes. Explora o uso de dois parâmetros de tipo (T e U) e como generics permitem reutilizar a mesma estrutura para qualquer combinação de tipos.",
+    tags: ["Generics", "Type Parameters", "OOP"],
+    code: `package generics.ex1;
+
+public class Par<T, U> {
+    private T primeiro;
+    private U segundo;
+
+    public Par(T primeiro, U segundo) {
+        this.primeiro = primeiro;
+        this.segundo = segundo;
+    }
+
+    public T getPrimeiro() { return primeiro; }
+    public U getSegundo()  { return segundo;  }
+
+    @Override
+    public String toString() {
+        return "(" + primeiro + ", " + segundo + ")";
+    }
+
+    public static void main(String[] args) {
+        Par<String, Integer> p1 = new Par<>("Idade", 25);
+        Par<Double, Boolean> p2 = new Par<>(3.14, true);
+
+        System.out.println(p1);
+        System.out.println(p2);
+    }
+}`,
+    output: `(Idade, 25)\n(3.14, true)`
+  },
+  {
+    pkg: "generics.ex2",
+    className: "Caixa",
+    title: "Caixa com Generics",
+    description: "Estrutura de dados genérica que funciona como um array tipado com capacidade fixa. Demonstra como usar generics para criar containers reutilizáveis, além de validação de índices com exceções e o padrão de cast seguro para arrays genéricos em Java.",
+    tags: ["Generics", "Array", "IndexOutOfBoundsException", "SuppressWarnings"],
+    code: `package generics.ex2;
+
+public class Caixa<T> {
+    private T[] elementos;
+    private int capacidade;
+
+    @SuppressWarnings("unchecked")
+    public Caixa(int capacidade) {
+        this.capacidade = capacidade;
+        this.elementos = (T[]) new Object[capacidade];
+    }
+
+    public void adicionar(T elemento, int indice) {
+        if (indice < 0 || indice >= capacidade) {
+            throw new IndexOutOfBoundsException(
+                "Índice " + indice + " fora dos limites. Capacidade: " + capacidade
+            );
+        }
+        elementos[indice] = elemento;
+    }
+
+    public T obter(int indice) {
+        if (indice < 0 || indice >= capacidade) {
+            throw new IndexOutOfBoundsException(
+                "Índice " + indice + " fora dos limites. Capacidade: " + capacidade
+            );
+        }
+        return elementos[indice];
+    }
+
+    public int getCapacidade() { return capacidade; }
+
+    public static void main(String[] args) {
+        Caixa<String> caixa = new Caixa<>(3);
+        caixa.adicionar("Maçã", 0);
+        caixa.adicionar("Banana", 1);
+        caixa.adicionar("Laranja", 2);
+
+        for (int i = 0; i < caixa.getCapacidade(); i++) {
+            System.out.println("[" + i + "] " + caixa.obter(i));
+        }
+    }
+}`,
+    output: `[0] Maçã\n[1] Banana\n[2] Laranja`
+  },
+  {
+    pkg: "collections.ex1",
+    className: "ListaEstudantes",
+    title: "Lista de Estudantes",
+    description: "Exemplo de uso de ArrayList com objetos de domínio. Demonstra inserção, remoção, iteração com for-each e uso de Comparator para ordenação de listas. Bom ponto de partida para entender o Collections Framework.",
+    tags: ["ArrayList", "Collections", "Comparator", "for-each"],
+    code: `package collections.ex1;
+
+import java.util.*;
+
+public class ListaEstudantes {
+    public static void main(String[] args) {
+        List<String> estudantes = new ArrayList<>(
+            Arrays.asList("Carlos", "Ana", "Beatriz", "Daniel")
+        );
+
+        // Ordenar alfabeticamente
+        Collections.sort(estudantes);
+
+        System.out.println("Lista ordenada:");
+        for (String nome : estudantes) {
+            System.out.println("  - " + nome);
+        }
+
+        // Remover um elemento
+        estudantes.remove("Carlos");
+        System.out.println("\\nApós remover Carlos: " + estudantes);
+    }
+}`,
+    output: `Lista ordenada:\n  - Ana\n  - Beatriz\n  - Carlos\n  - Daniel\n\nApós remover Carlos: [Ana, Beatriz, Daniel]`
+  }
+];
+
+let currentExercise = null;
+let currentTab = 'desc';
+
+// ── RENDER SIDEBAR ─────────────────────────────────────────────────────────
+function renderSidebar() {
+  const pkgMap = {};
+  data.forEach(ex => {
+    if (!pkgMap[ex.pkg]) pkgMap[ex.pkg] = [];
+    pkgMap[ex.pkg].push(ex);
+  });
+
+  document.getElementById('stat-packages').textContent = Object.keys(pkgMap).length;
+  document.getElementById('stat-classes').textContent = data.length;
+
+  const list = document.getElementById('pkg-list');
+  list.innerHTML = '';
+
+  Object.entries(pkgMap).forEach(([pkg, exercises]) => {
+    const isOpen = currentExercise && currentExercise.pkg === pkg;
+    const group = document.createElement('div');
+    group.className = 'pkg-group';
+
+    const header = document.createElement('div');
+    header.className = 'pkg-header' + (isOpen ? ' active' : '');
+    header.innerHTML = `
+      <span class="pkg-icon">📦</span>
+      <span>${pkg}</span>
+      <span class="pkg-count">${exercises.length}</span>
+    `;
+    header.onclick = () => {
+      const items = group.querySelector('.pkg-items');
+      items.classList.toggle('open');
+      header.classList.toggle('active');
+    };
+
+    const items = document.createElement('div');
+    items.className = 'pkg-items' + (isOpen ? ' open' : '');
+
+    exercises.forEach(ex => {
+      const item = document.createElement('div');
+      item.className = 'class-item' + (currentExercise === ex ? ' active' : '');
+      item.innerHTML = `<div class="class-dot"></div>${ex.className}.java`;
+      item.onclick = () => showExercise(ex);
+      items.appendChild(item);
+    });
+
+    group.appendChild(header);
+    group.appendChild(items);
+    list.appendChild(group);
+  });
+}
+
+// ── SHOW EXERCISE ──────────────────────────────────────────────────────────
+function showExercise(ex) {
+  currentExercise = ex;
+
+  document.getElementById('welcome').style.display = 'none';
+  const view = document.getElementById('exercise-view');
+  view.style.display = 'block';
+  view.style.animation = 'none';
+  void view.offsetWidth;
+  view.style.animation = 'fadeIn 0.25s ease';
+
+  document.getElementById('ex-pkg').textContent = ex.pkg;
+  document.getElementById('ex-title').textContent = ex.title;
+  document.getElementById('ex-classname').textContent = ex.className + '.java';
+  document.getElementById('ex-desc').textContent = ex.description;
+  document.getElementById('code-filename').textContent = ex.className + '.java';
+
+  const tagsEl = document.getElementById('ex-tags');
+  tagsEl.innerHTML = ex.tags.map(t => `<span class="tag">${t}</span>`).join('');
+
+  const codeEl = document.getElementById('ex-code');
+  codeEl.textContent = ex.code;
+  Prism.highlightElement(codeEl);
+
+  document.getElementById('ex-output').textContent = ex.output;
+
+  document.getElementById('breadcrumb').innerHTML = `
+    <span>java.estudos</span>
+    <span class="breadcrumb-sep">›</span>
+    <span>${ex.pkg}</span>
+    <span class="breadcrumb-sep">›</span>
+    <span class="breadcrumb-active">${ex.className}</span>
+  `;
+
+  switchTab('desc');
+  renderSidebar();
+}
+
+// ── TABS ───────────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  currentTab = tab;
+  document.querySelectorAll('.tab').forEach((t, i) => {
+    t.classList.toggle('active', ['desc','code','output'][i] === tab);
+  });
+  document.querySelectorAll('.tab-panel').forEach((p, i) => {
+    p.classList.toggle('active', ['tab-desc','tab-code','tab-output'][i] === 'tab-' + tab);
+  });
+}
+
+// ── COPY CODE ──────────────────────────────────────────────────────────────
+function copyCode() {
+  if (!currentExercise) return;
+  navigator.clipboard.writeText(currentExercise.code).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'copiado!';
+    setTimeout(() => btn.textContent = 'copiar', 1500);
+  });
+}
+
+// ── MODAL ──────────────────────────────────────────────────────────────────
+function openModal() {
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  ['f-pkg','f-class','f-title','f-desc','f-tags','f-code','f-output']
+    .forEach(id => document.getElementById(id).value = '');
+}
+
+function saveExercise() {
+  const pkg    = document.getElementById('f-pkg').value.trim();
+  const cls    = document.getElementById('f-class').value.trim();
+  const title  = document.getElementById('f-title').value.trim();
+  const desc   = document.getElementById('f-desc').value.trim();
+  const tags   = document.getElementById('f-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  const code   = document.getElementById('f-code').value;
+  const output = document.getElementById('f-output').value;
+
+  if (!pkg || !cls || !title) {
+    alert('Preencha Package, Nome da Classe e Título.');
+    return;
+  }
+
+  const ex = { pkg, className: cls, title, description: desc, tags, code, output };
+  data.push(ex);
+  closeModal();
+  showExercise(ex);
+}
+
+// ── INIT ───────────────────────────────────────────────────────────────────
+renderSidebar();
+</script>
+</body>
+</html>
